@@ -1,5 +1,5 @@
 # To get access to the queries use this link below
-[Link to SQL Fiddle](http://sqlfiddle.com/#!5/814e4c/8415)
+[Link to SQL Fiddle](http://sqlfiddle.com/#!17/7dae0/17910)
 
 We've joined these two tables from the following dataset
 CREATE TABLE netflix_titles_info
