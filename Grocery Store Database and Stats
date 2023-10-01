@@ -1,0 +1,92 @@
+--Create a grocery store database
+
+CREATE TABLE store (id INTEGER PRIMARY KEY, item TEXT, section TEXT, price INTEGER, popularity INTEGER);
+
+INSERT INTO store VALUES (1, "papaya", "produce", 2.99, 50);
+INSERT INTO store VALUES (2, "banana", "produce", 0.99, 95);
+INSERT INTO store VALUES (3, "qtips", "hygiene", 2.99, 55);
+INSERT INTO store VALUES (4, "beans", "bulk", 0.99, 50);
+INSERT INTO store VALUES (5, "beyond burgers", "meat", 4.99, 65);
+INSERT INTO store VALUES (6, "salsa", "fresh", 3.25, 43);
+INSERT INTO store VALUES (7, "hummus", "fresh", 2.99, 35);
+INSERT INTO store VALUES (8, "papaya", "hygiene", 2.99, 50);
+INSERT INTO store VALUES (9, "chick'n nuggs", "meat", 4.99, 75);
+INSERT INTO store VALUES (10, "peas", "frozen", 0.99, 25);
+INSERT INTO store VALUES (11, "smoothie berries", "frozen", 2.99, 33);
+INSERT INTO store VALUES (12, "granola", "bulk", 1.99, 80);
+INSERT INTO store VALUES (13, "vitamin D", "health", 8.99,29);
+INSERT INTO store VALUES (14, "nutritional yeast", "health", 2.99, 26);
+INSERT INTO store VALUES (15, "popcorn", "snacks", 1.99, 47);
+
+--display the database ordered by price. 
+SELECT * FROM store
+ORDER BY price desc; 
+
+--what is the avg price of items in the bulk section? 
+SELECT AVG(price) "avg bulk item price"
+FROM store
+where section='bulk'; 
+
+--what are the most 5 popular items? 
+SELECT item, price, popularity
+FROM store
+order by popularity desc
+limit 5; 
+
+# 1. What is the total revenue generated from all products in the store?
+SELECT SUM(price * quantity) AS total_revenue
+FROM store;
+
+# 2. What are the top 5 products with the highest sales quantity?
+SELECT product_name, category, quantity
+FROM store
+ORDER BY quantity DESC
+LIMIT 5;
+
+# 3. What is the average price of products in each category?
+SELECT category, AVG(price) AS avg_price
+FROM store
+GROUP BY category;
+
+# 4. How many products are in each category?
+SELECT category, COUNT(*) AS product_count
+FROM store
+GROUP BY category;
+
+# 5. What are the products that have a price higher than $3.00 and are in the "health" category?
+SELECT product_name, category, price
+FROM store
+WHERE price > 3.00 AND category = 'health';
+
+# 6. Which product has the lowest price per unit (price divided by quantity)?
+SELECT product_name, category, price / quantity AS price_per_unit
+FROM store
+ORDER BY price_per_unit
+LIMIT 1;
+
+# 7. How many products are there with a quantity less than 40?
+SELECT COUNT(*) AS low_quantity_products
+FROM store
+WHERE quantity < 40;
+
+# 8. What is the total sales value for each category?
+SELECT category, SUM(price * quantity) AS total_sales_value
+FROM store
+GROUP BY category;
+
+# 9. What are the products with a quantity greater than 50 and a price less than $3.00?
+SELECT product_name, category, quantity, price
+FROM store
+WHERE quantity > 50 AND price < 3.00;
+
+# 9. What are the products with a quantity greater than 50 and a price less than $3.00?
+SELECT product_name, category, quantity, price
+FROM store
+WHERE quantity > 50 AND price < 3.00;
+
+# 10. How many unique products are in the "produce" category?
+SELECT COUNT(DISTINCT product_name) AS unique_produce_products
+FROM store
+WHERE category = 'produce';
+
+
