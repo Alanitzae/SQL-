@@ -1,0 +1,115 @@
+# For this project, I downloaded Spotify data from Kaggle.
+# Then I created a table to insert Spotify data into.
+# Finally, I performed analytics on the data using SQL. 
+
+#Creating the table: 
+CREATE TABLE BIT_DB.Spotifydata (
+id integer PRIMARY KEY,
+artist_name varchar NOT NULL,
+track_name varchar NOT NULL,
+track_id varchar NOT NULL,
+popularity integer NOT NULL,
+danceability decimal(4,3) NOT NULL,
+energy decimal(4,3) NOT NULL,
+key integer NOT NULL,
+loudness decimal(5,3) NOT NULL,
+mode integer NOT NULL,
+speechiness decimal(5,4) NOT NULL,
+acousticness decimal(6,5) NOT NULL,
+instrumentalness text NOT NULL,
+liveness decimal(5,4) NOT NULL,
+valence decimal(4,3) NOT NULL,
+tempo decimal(6,3) NOT NULL,
+duration_ms integer NOT NULL,
+time_signature integer NOT NULL 
+)
+
+#Then I inserted the Spotify Data .csv into the table.
+
+#Next, I explored the data using the following SQL. 
+
+#First I determined the avg popularity, danceability, and energy by artist and track. 
+SELECT
+artist_name
+,track_name
+,avg(popularity)
+,avg(danceability)
+,avg(energy)
+FROM BIT_DB.spotifydata
+GROUP BY artist_name, track_name
+
+#Then I determined who the Top 10 artists are by popularity
+SELECT track_name, artist_name, popularity
+FROM BIT_DB.spotifydata
+ORDER BY popularity desc
+LIMIT 10
+
+# 1. Which artists have the highest average popularity for their tracks?
+SELECT artist_name, AVG(popularity) AS avg_popularity
+FROM your_table_name
+GROUP BY artist_name
+ORDER BY avg_popularity DESC
+LIMIT 5;
+
+# 2. What is the distribution of danceability scores in the dataset?
+SELECT danceability, COUNT(*) AS count
+FROM your_table_name
+GROUP BY danceability
+ORDER BY danceability;
+
+# 3. Which tracks have the highest energy levels (sorted by energy in descending order)?
+SELECT track_name, artist_name, energy
+FROM your_table_name
+ORDER BY energy DESC
+LIMIT 5;
+
+# 4. How many tracks fall under each time signature?
+SELECT time_signature, COUNT(*) AS count
+FROM your_table_name
+GROUP BY time_signature;
+
+# 5. What is the average duration of tracks by different artists?
+SELECT CORR(loudness, energy) AS loudness_energy_corr
+FROM your_table_name;
+
+# 6. What is the correlation between loudness and energy in the dataset?
+SELECT CORR(loudness, energy) AS loudness_energy_corr
+FROM your_table_name;
+
+# 7. Find the tracks with the highest valence and lowest valence.
+-- Highest valence
+SELECT track_name, artist_name, valence
+FROM your_table_name
+ORDER BY valence DESC
+LIMIT 1;
+
+-- Lowest valence
+SELECT track_name, artist_name, valence
+FROM your_table_name
+ORDER BY valence
+LIMIT 1;
+
+# 8. How many tracks are there for each key?
+SELECT key, COUNT(*) AS count
+FROM your_table_name
+GROUP BY key;
+
+# 9. Calculate the average popularity for tracks with high energy (energy > 0.8) and low energy (energy < 0.3).
+SELECT CASE
+           WHEN energy > 0.8 THEN 'High Energy'
+           WHEN energy < 0.3 THEN 'Low Energy'
+           ELSE 'Medium Energy'
+       END AS energy_category,
+       AVG(popularity) AS avg_popularity
+FROM your_table_name
+GROUP BY energy_category;
+
+# 10. Identify tracks with instrumentalness above 0.9 and order them by popularity.
+SELECT track_name, artist_name, popularity, instrumentalness
+FROM your_table_name
+WHERE instrumentalness > 0.9
+ORDER BY popularity DESC;
+
+
+
+
